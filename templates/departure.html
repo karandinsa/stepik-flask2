@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block container %}
+  <header class="container mt-3">
+    {% with departures=departures_menu %}
+      {% include 'nav_bar.html' %}
+    {% endwith %}
+  </header>
+  <main class="container mt-3">
+    <h1 class="display-5 mt-4">Летим {{ departures }}</h1>
+    {% set min_price = deps| sort(attribute="price") | first %}
+    {% set max_price = deps| sort(attribute="price") | last %}
+    {% set min_nights = deps| sort(attribute="nights") | first %}
+    {% set max_nights = deps| sort(attribute="nights") | last %}
+    <p class="mb-4">Найдено {{ tour|length }} туров, от {{ min_price["price"] }} до {{ max_price["price"] }}
+      и от {{ min_nights["nights"] }} ночей до {{ max_nights["nights"] }} ночей</p>
+    <!-- CARDS -->
+    <div class="row mt-5">
+      {% for i in tour %}
+        <div class="col-4">
+          <div class="card mb-4">
+            <img src="{{ tour[i].picture }}" class="card-img-top img-fluid" alt="">
+            <div class="card-body">
+              <h2 class="h5 card-title">{{ tour[i].title }}</h2>
+              <p class="card-text">{{ tour[i].description }}</p>
+              <a href="/tours/{{ i }}/" class="btn btn-sm btn-primary">Подробнее</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </main>
+{% endblock %}

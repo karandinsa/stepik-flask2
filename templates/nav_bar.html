@@ -1,0 +1,21 @@
+{% extends 'nav.html' %}
+{% block nav_container %}
+    {% for city_cut in departures%}
+        {% set active="" %}
+        {% if "departures" in request.path %}
+            {% if request.path == "/departures/"+city_cut+"/" %} {% set active = "active" %}{% endif %}
+                <li class="nav-item {{ active }}" >
+                    <a class="nav-link" href="/departures/{{ city_cut }}/">{{ departures[city_cut] }}</a>
+                </li>
+        {% elif "tours" in request.path %}
+            {% if tour["departure"] == city_cut %}{% set active = "active" %}{% endif %}
+                <li class="nav-item {{ active }}" >
+                    <a class="nav-link" href="/departures/{{ city_cut }}/">{{ departures[city_cut] }}</a>
+                </li>
+        {% else %}
+            <li class="nav-item" >
+                <a class="nav-link" href="/departures/{{ city_cut }}/">{{ departures[city_cut] }}</a>
+            </li>
+        {% endif %}
+    {% endfor%}
+{% endblock %}
